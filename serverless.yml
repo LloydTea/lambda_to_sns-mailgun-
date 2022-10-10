@@ -1,0 +1,65 @@
+service: serverlessSetup
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: ${env:AWS_region}
+  
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - "dynamodb:PutItem"
+            - "dynamodb:GetItem"
+            - "dynamodb:DeleteItem"
+            - "dynamodb:Scan"
+          Resource:
+            - ${env:ARN_Dynamodb}
+
+        - Effect: Allow
+          Action:
+            - "sns:Publish"
+          Resource:
+            - ${env:ARN_SNS}
+# functions
+functions:
+  mailgunread:
+    handler: src/functions/readdata.handler
+    events:
+      - http: 
+          path: serverlessSetup/readdata
+          method: post
+    destinations:
+      onSuccess: ${env:ARN_SNS}
+
+# Serverless plugins
+plugins:
+  - serverless-plugin-typescript
+  - serverless-dotenv-plugin
+
+# Resources your functions use
+resources:
+  Resources:
+  # SNS Topics
+    GetMailDetails:
+      Type: AWS::SNS::Topic
+      Properties:
+        DisplayName: New MailGun Email Event
+        TopicName: mailgun-email
+
+  # Dynamodb
+    usersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        KeySchema:
+          - AttributeName: EmailId
+            KeyType: HASH
+        TableName: mailgun-db
+        AttributeDefinitions:
+          - AttributeName: EmailId
+            AttributeType: S
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1

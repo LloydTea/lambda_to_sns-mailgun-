@@ -1,0 +1,55 @@
+{
+  "name": "mailgun",
+  "version": "1.0.0",
+  "description": "Mailgun_lamda_sns",
+  "main": "app.js",
+  "scripts": {
+    "start:dev": "nodemon",
+    "start:prod": "node -r ts-node/register/transpile-only  -r tsconfig-paths/register ./dist/src/app.js",
+    "build": "tsc -p tsconfig.prod.json",
+    "test:jest": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git-codecommit.eu-central-1.amazonaws.com/v1/repos/mailgun-lambda"
+  },
+  "author": "LloydTea",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.106",
+    "@types/jest": "^29.1.0",
+    "@types/node": "^18.7.23",
+    "@types/serverless": "^3.12.8",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "aws-lambda": "^1.0.7",
+    "eslint": "^8.24.0",
+    "eslint-config-standard-with-typescript": "^23.0.0",
+    "eslint-config-xo": "^0.42.0",
+    "eslint-config-xo-typescript": "^0.53.0",
+    "eslint-import-resolver-typescript": "^3.5.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.3.0",
+    "eslint-plugin-promise": "^6.0.1",
+    "jest": "^29.1.1",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.7.1",
+    "serverless": "^3.22.0",
+    "serverless-plugin-typescript": "^2.1.2",
+    "ts-jest": "^29.0.3",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.1.0",
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "@types/uuid": "^8.3.4",
+    "dotenv": "^16.0.3",
+    "dotenv-safe": "^8.2.0",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.7.1",
+    "serverless-dotenv-plugin": "^4.0.2",
+    "uuid": "^9.0.0"
+  }
+}
